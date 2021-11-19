@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import styled from "styled-components";
+import { useStore } from "../../store";
 import useClickOutside from "./useClickOutside";
 
 const StyledColor = styled.div`
@@ -16,17 +17,18 @@ const StyledColorPicker = styled.div`
   position: absolute;
 `;
 
-export const PopoverPicker = ({ Existingcolor, index, onChange }) => {
+export const PopoverPicker = ({ color, paletteIndex, colorIndex }) => {
   const popover = useRef();
   const [isOpen, toggle] = useState(false);
-  const [color, setColor] = useState(Existingcolor); //TODO : Fix null state on click
+  const [backgroundColor, setBackgroundColor] = useState(color);
+  const updateColorInPalette = useStore((store) => store.updateColorInPalette);
 
   const close = useCallback(() => toggle(false), []);
   useClickOutside(popover, close);
 
   useEffect(() => {
-    onChange(index, color);
-  }, [color]);
+    updateColorInPalette(paletteIndex, colorIndex, backgroundColor);
+  }, [backgroundColor]);
 
   return (
     <div className="picker">
@@ -36,7 +38,7 @@ export const PopoverPicker = ({ Existingcolor, index, onChange }) => {
         color={color}
         onClick={() => {
           if (color === null) {
-            setColor("#000000");
+            setBackgroundColor("#000000");
           }
           toggle(true);
         }}
@@ -44,7 +46,10 @@ export const PopoverPicker = ({ Existingcolor, index, onChange }) => {
 
       {isOpen && (
         <StyledColorPicker className="popover" ref={popover}>
-          <HexColorPicker color={color} onChange={setColor} />
+          <HexColorPicker
+            color={backgroundColor}
+            onChange={setBackgroundColor}
+          />
         </StyledColorPicker>
       )}
     </div>

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Footer from "./Footer";
 import Header from "./Header";
 
 const Container = styled.div`
@@ -7,6 +6,7 @@ const Container = styled.div`
   margin: 0 auto;
   display: flex;
   justify-content: center;
+  margin-top: 10px;
 `;
 
 export default function Layout({ children }) {
@@ -14,7 +14,7 @@ export default function Layout({ children }) {
     <>
       <Header />
       <Container>{children}</Container>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

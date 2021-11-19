@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import AddNew from "./Components/AddNew";
 import Layout from "./Components/Layout/Layout";
 import Swatch from "./Components/Swatch/Swatch";
 
@@ -16,6 +17,7 @@ function App() {
       <GlobalStyle />
       <Layout>
         <Swatch />
+        <AddNew />
       </Layout>
     </>
   );

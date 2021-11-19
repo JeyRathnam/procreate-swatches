@@ -1,5 +1,5 @@
-import { useState } from "react/cjs/react.development";
 import styled from "styled-components";
+import { useStore } from "../../store";
 import Pallet from "./Pallet";
 
 const StyledSwatchContainer = styled.div`
@@ -10,32 +10,12 @@ const StyledSwatchContainer = styled.div`
 `;
 
 export default function Swatch() {
-  const existingColors = [["#FFFFFF", "#000000"]];
-
-  const [colorPalettes, setColorPalettes] = useState(existingColors);
-
-  function updateColorPallete(i, colors) {
-    console.log(i, colors);
-    const newPalette = [...colorPalettes];
-    newPalette[i] = colors;
-    setColorPalettes(newPalette);
-  }
-
-  function addNewPalette(pallete) {
-    console.log(...colorPalettes, pallete);
-    const newPalette = [...colorPalettes, pallete];
-    setColorPalettes(newPalette);
-  }
+  const colorPalettes = useStore((state) => state.palettes);
 
   return (
     <StyledSwatchContainer>
       {colorPalettes.map((colorPalette, i) => (
-        <Pallet
-          key={i}
-          colors={colorPalette}
-          updateColorPalette={updateColorPallete}
-          addNewPalette={addNewPalette}
-        />
+        <Pallet key={i} paletteIndex={i} colors={colorPalette} />
       ))}
     </StyledSwatchContainer>
   );
