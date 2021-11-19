@@ -46,9 +46,9 @@ function ThirtyItems(colors, paletteIndex) {
   const items = [];
 
   if (colors.length <= 30) {
-    const len = colors.length;
-    colors[29] = null;
-    colors.fill(null, len, 30);
+    for (let i = colors.length; i < 30; i++) {
+      colors[i] = null;
+    }
   }
 
   colors.forEach((color, i) =>

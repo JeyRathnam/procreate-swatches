@@ -1,13 +1,15 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
 
+const emptyPalette = new Array(30).fill(null);
+
 function updateColorInPalette(i, colorIndex, color, palettes) {
+  // console.log(i, colorIndex, color, palettes);
   palettes[i][colorIndex] = color;
   return palettes;
 }
 
 function removePalette(paletteIndex, palettes) {
-  console.log(palettes, paletteIndex, palettes.length);
   palettes.splice(paletteIndex, 1);
   return palettes;
 }
@@ -20,7 +22,7 @@ export const useStore = create(
       set((state) => ({ palettes: [...state.palettes, palette] })),
 
     addEmptyPalette: () =>
-      set((state) => ({ palettes: [...state.palettes, []] })),
+      set((state) => ({ palettes: [...state.palettes, [...emptyPalette]] })),
 
     updateColorInPalette: (paletteIndex, colorIndex, color) =>
       set((state) => ({

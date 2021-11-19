@@ -28,14 +28,14 @@ export const PopoverPicker = ({ color, paletteIndex, colorIndex }) => {
 
   useEffect(() => {
     updateColorInPalette(paletteIndex, colorIndex, backgroundColor);
-  }, [backgroundColor]);
+  }, [paletteIndex, colorIndex, backgroundColor, updateColorInPalette]);
 
   return (
     <div className="picker">
       <StyledColor
         className="swatch"
         size={5}
-        color={color}
+        color={backgroundColor}
         onClick={() => {
           if (color === null) {
             setBackgroundColor("#000000");
