@@ -2,10 +2,13 @@ import styled from "styled-components";
 import Header from "./Header";
 
 const Container = styled.div`
-  width: 95vw;
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
+  align-content: stretch;
   margin-top: 10px;
 `;
 

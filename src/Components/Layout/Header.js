@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import { useAuth } from "../../Contexts/Auth";
+import SignIn from "./Header/Auth/SignIn";
+import SignOut from "./Header/Auth/Signout";
+import Logo from "./Header/Logo";
 
 const StyledHeader = styled.header`
   display: flex;
@@ -12,31 +16,57 @@ const StyledDiv = styled.div`
   display: flex;
   align-items: center;
   color: #f1f5f9;
-  width: 50vw;
+  width: 60vw;
   margin: 0;
 `;
 
-const StyledSvg = styled.svg`
-  width: 28px;
-  height: 28px;
+const StyledMenuItemContainer = styled.div`
+  flex-grow: 3;
+`;
+
+const StyledAuthContainer = styled.div``;
+
+const StyledAuthButton = styled.button`
+  decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+
+  font-weight: 600;
+  height: 2.5rem;
+  min-width: 2.5rem;
+  font-size: 14px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border: 2px solid transparent;
+  border-radius: 0.375rem;
+
+  &:hover {
+    background: #000d6b;
+  }
 `;
 
 export default function Header() {
+  const { user } = useAuth();
+
   return (
     <StyledHeader>
       <StyledDiv>
-        <StyledSvg
-          className="w-6 h-6"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fillRule="evenodd"
-            d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z"
-            clipRule="evenodd"
-          ></path>
-        </StyledSvg>
+        <Logo />
+        <StyledMenuItemContainer />
+        <StyledAuthContainer>
+          {user ? (
+            <p>
+              {user.email} <SignOut />
+            </p>
+          ) : (
+            <>
+              <SignIn />
+              <StyledAuthButton>Signup</StyledAuthButton>
+            </>
+          )}
+        </StyledAuthContainer>
       </StyledDiv>
     </StyledHeader>
   );
