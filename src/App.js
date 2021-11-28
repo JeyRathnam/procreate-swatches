@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-import AddNew from "./Components/AddNew";
+import AddNewButton from "./Components/AddNewButton";
 import Dashboard from "./Components/Dashboard";
-import Home from "./Components/Home";
 import Layout from "./Components/Layout/Layout";
+import NewPalette from "./Components/NewPalette";
 import { PrivateRoute } from "./Components/PrivateRoute";
+import SavedPalette from "./Components/SavedPalette";
 import { AuthProvider } from "./Contexts/Auth";
 import Login from "./Routes/Login";
 
@@ -24,21 +25,30 @@ function App() {
         <AuthProvider>
           <Layout>
             <Routes>
-              <Route exact path="/" element={<Home />} />
+              <Route exact path="/" element={<NewPalette />} />
               <Route path="/login" element={<Login />} />
               <Route
-                path="/dashboard"
+                path="/dashboard/:id"
                 element={
                   <PrivateRoute>
-                    <Dashboard />{" "}
+                    <Dashboard />
                   </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="/palette/:paletteId"
+                element={
+                  // <PrivateRoute>
+                  <SavedPalette />
+                  // </PrivateRoute>
                 }
               />
             </Routes>
           </Layout>
         </AuthProvider>
       </Router>
-      <AddNew />
+      <AddNewButton />
     </>
   );
 }

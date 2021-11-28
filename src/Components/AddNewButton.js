@@ -15,7 +15,7 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
-export default function AddNew() {
+export default function AddNewButton() {
   const addEmptyPalette = useStore((state) => state.addEmptyPalette);
 
   return (

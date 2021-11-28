@@ -1,6 +1,8 @@
+import { useEffect, useReducer, useRef } from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { useStore } from "../../store";
-import { supabase } from "../../Supabase/supabaseClient";
+import { insert_palette, savePalette } from "../../Supabase/db";
+import { default as PaletteNameControl } from "./PaletteNameControl";
 
 const StyledControlBarContainer = styled.div`
   display: flex;
@@ -10,48 +12,75 @@ const StyledControlBarContainer = styled.div`
   align-items: center;
 `;
 
-const StyledSaveTextBox = styled.input`
-  width: 20em;
-  height: 1.5rem;
-  border: 2px solid transparent;
-  border-radius: 0.2rem;
-`;
-
-const StyledSaveButton = styled.button`
-  margin-left: 5px;
-  height: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: white;
-  font-weight: 600;
-  height: 2rem;
-
-  font-size: 15px;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  border: 2px solid transparent;
-  border-radius: 0.2rem;
-  background: #ff5da2;
-`;
-
-async function handleSave(palette) {
-  console.log(palette);
-  const { data, error } = await supabase
-    .from("palette")
-    .insert([{ palette: palette }]);
-
-  console.log(data, error);
+async function handleSave(id, palette, name) {
+  console.log(name);
+  const paletteDetail = {
+    id: id,
+    name: name,
+    palette: palette,
+  };
+  return await savePalette(paletteDetail)
+    .then((data) => data.id)
+    .catch((e) => e);
 }
 
-export default function ControlBar() {
-  const palette = useStore((state) => state.palettes);
+function reducer(state, action) {
+  switch (action.type) {
+    case "SAVE_PALETTE":
+      return { ...state, showNameInput: false, id: action.payload };
+
+    case "TOGGLE_INPUT":
+      return { ...state, showNameInput: !state.showNameInput };
+
+    case "TEXT_CHANGE":
+      return { ...state, name: action.payload };
+  }
+}
+
+export default function ControlBar({ id, allowEdit, paletteName, palettes }) {
+  const navigate = useNavigate();
+  const initialState = {
+    name: paletteName ?? "",
+    palettes: palettes,
+    showNameInput: !id ? true : false,
+    id: id,
+  };
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const paletteNameRef = useRef(null);
+
+  useEffect(() => console.log(state), [state]);
+
+  async function onSave() {
+    const paletteDetail = {
+      palette_id: state.id ?? "",
+      inp_palette_name: state.name,
+      inp_palette: state.palettes,
+    };
+
+    insert_palette(paletteDetail).then((data) => {
+      console.log(data);
+      dispatch({
+        type: "SAVE_PALETTE",
+        payload: data,
+      });
+
+      navigate(`/palette/${data}`);
+    });
+  }
+
   return (
     <StyledControlBarContainer>
-      <StyledSaveTextBox />
-      <StyledSaveButton onClick={() => handleSave(palette)}>
-        save
-      </StyledSaveButton>
+      <PaletteNameControl
+        name={state.name}
+        nameRef={paletteNameRef}
+        allowEdit={allowEdit}
+        showNameInput={state.showNameInput}
+        onTextChange={(e) =>
+          dispatch({ type: "TEXT_CHANGE", payload: e.target.value })
+        }
+        onSaveClick={() => onSave()}
+        onEditClick={() => dispatch({ type: "TOGGLE_INPUT" })}
+      />
     </StyledControlBarContainer>
   );
 }

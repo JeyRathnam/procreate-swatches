@@ -11,6 +11,7 @@ function updateColorInPalette(i, colorIndex, color, palettes) {
 
 function removePalette(paletteIndex, palettes) {
   palettes.splice(paletteIndex, 1);
+  console.log(palettes);
   return palettes;
 }
 
