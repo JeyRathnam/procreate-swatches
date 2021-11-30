@@ -43,6 +43,7 @@ export default function ControlBar({ id, allowEdit, paletteName, palettes }) {
     name: paletteName ?? "",
     palettes: palettes,
     showNameInput: !id ? true : false,
+    isOwned: false,
     id: id,
   };
   const [state, dispatch] = useReducer(reducer, initialState);

@@ -1,39 +1,68 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 import { useParams } from "react-router";
 import { get_palette } from "../Supabase/db";
 import ControlBar from "./Controls/ControlBar";
 import Swatch from "./Swatch/Swatch";
 
+const initialState = {
+  isLoading: true,
+  isError: false,
+  data: {
+    paletteName: "",
+    palette: [],
+    paletteId: "",
+    userId: "",
+    isOwned: false,
+  },
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "ERROR":
+      return { ...state, isError: true };
+
+    case "SET_DATA":
+      return { ...state, isLoading: false, isError: false, data: action.data };
+  }
+}
+
 export default function SavedPalette() {
   const { paletteId } = useParams();
-  const [palette, setPalette] = useState([]);
-  const [paletteName, setPaletteName] = useState("");
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     get_palette(paletteId)
-      .then(({ palette_name, palette }) => {
-        console.log(palette_name, palette);
-        setPaletteName(palette_name);
-        setPalette(palette);
-        setLoading(false);
+      .then(({ paletteName, palette, isOwned }) => {
+        const data = {
+          paletteName: paletteName,
+          palette: palette,
+          paletteId: paletteId,
+          userId: "",
+          isOwned: isOwned,
+        };
+
+        dispatch({ type: "SET_DATA", data: data });
       })
-      .catch((e) => setError(true));
+      .catch(dispatch({ type: "ERROR" }));
   }, []);
 
-  if (loading) {
+  if (state.isLoading) {
     return <div>Loading ...</div>;
   }
 
-  if (error) {
+  if (state.isError) {
     return <div>Error</div>;
   }
 
   return (
     <>
-      <ControlBar id={paletteId} paletteName={paletteName} palettes={palette} />
-      <Swatch palettes={palette} />
+      <ControlBar
+        id={state.data.paletteId}
+        paletteName={state.data.paletteName}
+        palettes={state.data.palette}
+        allowEdit={state.data.isOwned}
+      />
+      <Swatch palettes={state.data.palette} />
     </>
   );
 }

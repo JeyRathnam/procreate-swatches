@@ -37,17 +37,15 @@ export async function insert_palette(paletteDetail) {
   return data;
 }
 
-export async function get_palette(paletteId) {
-  const { data, error } = await supabase
-    .from("palette")
-    .select("palette, palette_name")
-    .eq("id", paletteId);
+export async function get_palette(inp_palette_id) {
+  let { data, error } = await supabase.rpc("get_palette", {
+    inp_palette_id,
+  });
 
   if (error) {
-    console.log(error);
+    return error;
   }
 
   console.log(data);
-
-  return data[0];
+  return data;
 }
