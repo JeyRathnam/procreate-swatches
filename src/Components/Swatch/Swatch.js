@@ -9,6 +9,10 @@ const StyledSwatchContainer = styled.div`
 `;
 
 export default function Swatch({ palettes }) {
+  if (!Array.isArray(palettes)) {
+    return <div>Error</div>;
+  }
+
   return (
     <StyledSwatchContainer>
       {palettes.map((colorPalette, i) => (

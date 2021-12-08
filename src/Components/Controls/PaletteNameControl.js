@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import EditIcon from "./EditIcon";
 
+const StyledNameContainer = styled.div`
+  flex-grow: 1;
+`;
+
 const StyledSaveButton = styled.button`
   margin-left: 5px;
   height: 24px;
@@ -41,7 +45,7 @@ export default function PaletteNameControl({
   onEditClick,
 }) {
   return (
-    <>
+    <StyledNameContainer>
       {showNameInput ? (
         <>
           <StyledSaveTextBox
@@ -66,6 +70,6 @@ export default function PaletteNameControl({
           )}
         </>
       )}
-    </>
+    </StyledNameContainer>
   );
 }

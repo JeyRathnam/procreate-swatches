@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-import AddNewButton from "./Components/AddNewButton";
 import Dashboard from "./Components/Dashboard";
+import Home from "./Components/Home";
 import Layout from "./Components/Layout/Layout";
 import NewPalette from "./Components/NewPalette";
 import { PrivateRoute } from "./Components/PrivateRoute";
@@ -25,7 +25,8 @@ function App() {
         <AuthProvider>
           <Layout>
             <Routes>
-              <Route exact path="/" element={<NewPalette />} />
+              <Route exact path="/" element={<Home />} />
+              <Route exact path="/newPalette" element={<NewPalette />} />
               <Route path="/login" element={<Login />} />
               <Route
                 path="/dashboard/:id"
@@ -48,7 +49,6 @@ function App() {
           </Layout>
         </AuthProvider>
       </Router>
-      <AddNewButton />
     </>
   );
 }
