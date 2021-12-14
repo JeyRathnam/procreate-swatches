@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import styled from "styled-components";
 import { useStore } from "../store";
 import AddNewButton from "./AddNewButton";
@@ -18,10 +17,7 @@ const Container = styled.div`
 
 export default function NewPalette() {
   const palettes = useStore((state) => state.palettes);
-  const resetPaletteState = useStore((state) => state.resetPaletteState);
-  useEffect(() => {
-    resetPaletteState();
-  }, []);
+
   // console.log("home", palettes);
   return (
     <Container>

@@ -24,6 +24,8 @@ export default function SavedPalette() {
   const getPaletteFromId = useStore((state) => state.getPaletteFromId);
   const palettes = useStore((state) => state.palettes);
 
+  console.log(loading);
+
   useEffect(() => {
     getPaletteFromId(paletteId);
     setLoading(false);

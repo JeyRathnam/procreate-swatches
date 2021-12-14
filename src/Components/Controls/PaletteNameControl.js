@@ -2,6 +2,8 @@ import styled from "styled-components";
 import EditIcon from "./EditIcon";
 
 const StyledNameContainer = styled.div`
+  display: flex;
+  align-items: center;
   flex-grow: 1;
 `;
 
@@ -54,7 +56,6 @@ export default function PaletteNameControl({
             onChange={onTextChange}
           />
           <StyledSaveButton onClick={() => onSaveClick()}>
-            {" "}
             Save
           </StyledSaveButton>
         </>

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { useStore } from "../../store";
@@ -30,6 +30,7 @@ export default function ControlBar() {
 
   const navigate = useNavigate();
   const paletteNameRef = useRef(null);
+  const copyAsNewPalette = useStore((state) => state.copyAsNewPalette);
 
   useEffect(() => {
     if (paletteId !== null) {
@@ -40,8 +41,13 @@ export default function ControlBar() {
   function handleSavePalette() {
     savePalette(paletteId, paletteName, palettes);
     toggleEditMode();
-    navigate(`/palette/${paletteId}`);
   }
+
+  const handleCopyClick = useCallback(() => {
+    console.log(palettes);
+    copyAsNewPalette();
+    navigate("/newPalette");
+  }, [copyAsNewPalette, navigate]);
 
   return (
     <StyledControlBarContainer>
@@ -57,7 +63,7 @@ export default function ControlBar() {
         onEditClick={toggleEditMode}
       />
 
-      <button>Copy as new</button>
+      <button onClick={handleCopyClick}>Copy as new</button>
     </StyledControlBarContainer>
   );
 }

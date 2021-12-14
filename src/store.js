@@ -33,10 +33,26 @@ export const useStore = create(
     isOwned: true,
     isEditMode: true,
 
-    resetPaletteState: () => set((state) => ({ ...initalState })),
+    resetPaletteState: () =>
+      set((state) => ({
+        paletteId: null,
+        palettes: [[]],
+        paletteName: "",
+        isOwned: true,
+        isEditMode: true,
+      })),
 
     addNewPalette: (palette) =>
       set((state) => ({ palettes: [...state.palettes, palette] })),
+
+    copyAsNewPalette: () =>
+      set((state) => ({
+        palettes: [...state.palettes],
+        paletteId: null,
+        paletteName: "",
+        isOwned: true,
+        isEditMode: true,
+      })),
 
     addEmptyPalette: () =>
       set((state) => ({ palettes: [...state.palettes, [...emptyPalette]] })),
@@ -61,7 +77,7 @@ export const useStore = create(
 
     savePalette: async (paletteId, paletteName, palettes) => {
       const paletteDetail = {
-        palette_id: (paletteId && supabase.auth.user()) ?? "",
+        palette_id: paletteId && supabase.auth.user() ? paletteId : "",
         inp_palette_name: paletteName,
         inp_palette: palettes,
       };
@@ -69,14 +85,12 @@ export const useStore = create(
 
       insert_palette(paletteDetail)
         .then((data) => {
-          console.log(data);
           set({ paletteId: data });
         })
         .catch((e) => console.log(e));
     },
 
     getPaletteFromId: async (inp_palette_id) => {
-      console.log(inp_palette_id);
       let { data, error } = await supabase.rpc("get_palette", {
         inp_palette_id,
       });
@@ -86,6 +100,7 @@ export const useStore = create(
       }
 
       set((state) => ({
+        paletteId: inp_palette_id,
         paletteName: data.paletteName,
         palettes: data.palette,
         isOwned: data.isOwned,
