@@ -28,7 +28,7 @@ function removePalette(paletteIndex, palettes) {
 export const useStore = create(
   devtools((set) => ({
     paletteId: null,
-    palettes: [[]],
+    palettes: [{}],
     paletteName: "",
     isOwned: true,
     isEditMode: true,
@@ -36,7 +36,7 @@ export const useStore = create(
     resetPaletteState: () =>
       set((state) => ({
         paletteId: null,
-        palettes: [[]],
+        palettes: [{}],
         paletteName: "",
         isOwned: true,
         isEditMode: true,

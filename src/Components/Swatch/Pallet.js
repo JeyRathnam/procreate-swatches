@@ -29,18 +29,18 @@ const StyledPaletteActions = styled.div`
 
 function ThirtyItems(colors, paletteIndex) {
   const items = [];
-
-  if (colors.length <= 30) {
-    for (let i = colors.length; i < 30; i++) {
-      colors[i] = null;
-    }
-  }
-
-  colors.forEach((color, i) =>
+  console.log(colors);
+  for (let i = 0; i < 30; i++) {
+    const color = colors[i] ?? null;
     items.push(
-      <PopoverPicker key={i} paletteIndex={paletteIndex} colorIndex={i} />
-    )
-  );
+      <PopoverPicker
+        key={i}
+        paletteIndex={paletteIndex}
+        colorIndex={i}
+        color={color}
+      />
+    );
+  }
 
   return items;
 }
@@ -54,7 +54,9 @@ export default function Pallet({ paletteIndex, colors }) {
       <StyledGrid>{ThirtyItems(colors, paletteIndex)}</StyledGrid>
       <StyledPaletteActions>
         <ExportIcon onExportClick={() => exportTozip(colors)} />
-        <CopyIcon onCopyClick={() => addNewPalette(colors.slice(0))} />
+        <CopyIcon
+          onCopyClick={() => addNewPalette(Object.assign({}, colors))}
+        />
         <DeleteIcon onDeleteClick={() => deletePalette(paletteIndex)} />
       </StyledPaletteActions>
     </StyledPallet>

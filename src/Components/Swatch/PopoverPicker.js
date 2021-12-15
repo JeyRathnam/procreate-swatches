@@ -20,7 +20,7 @@ const StyledColorPicker = styled.div`
 
 const isEditModeSelector = (state) => state.isEditMode;
 
-export const PopoverPicker = ({ paletteIndex, colorIndex }) => {
+export const PopoverPicker = ({ paletteIndex, colorIndex, color }) => {
   const palettes = useStore((state) => state.palettes);
 
   const popover = useRef();
@@ -44,13 +44,13 @@ export const PopoverPicker = ({ paletteIndex, colorIndex }) => {
     <div className="picker">
       <div
         style={{
-          backgroundColor: palettes[paletteIndex][colorIndex] ?? "",
+          backgroundColor: color ?? "",
         }}
         className="swatch"
-        color={palettes[paletteIndex][colorIndex]}
+        color={color}
         onClick={() => {
           if (isEditMode) {
-            if (palettes[paletteIndex][colorIndex] === null) {
+            if (color === null) {
               handleColorChange("#000000");
             }
             toggle(true);
@@ -60,10 +60,7 @@ export const PopoverPicker = ({ paletteIndex, colorIndex }) => {
 
       {isOpen && (
         <StyledColorPicker className="popover" ref={popover}>
-          <HexColorPicker
-            color={palettes[paletteIndex][colorIndex]}
-            onChange={handleColorChange}
-          />
+          <HexColorPicker color={color} onChange={handleColorChange} />
         </StyledColorPicker>
       )}
     </div>
