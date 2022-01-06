@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 import Dashboard from "./Components/Dashboard";
 import Home from "./Components/Home";
 import Layout from "./Components/Layout/Layout";
+import MySavedPalettes from "./Components/MySavedPalettes";
 import NewPalette from "./Components/NewPalette";
 import { PrivateRoute } from "./Components/PrivateRoute";
 import SavedPalette from "./Components/SavedPalette";
@@ -26,8 +27,9 @@ function App() {
           <Layout>
             <Routes>
               <Route exact path="/" element={<Home />} />
-              <Route exact path="/newPalette" element={<NewPalette />} />
+              <Route exact path="/new-palette" element={<NewPalette />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/my-palettes" element={<MySavedPalettes />} />
               <Route
                 path="/dashboard/:id"
                 element={

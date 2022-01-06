@@ -57,7 +57,7 @@ export default function Home() {
 
   function onNewPaletteClick() {
     resetPaletteState();
-    navigate("/newPalette");
+    navigate("/new-palette");
   }
 
   return (

@@ -13,10 +13,16 @@ const initalState = {
   isEditMode: true,
 };
 
-function updateColorInPalette(i, colorIndex, color, palettes) {
-  // console.log(i, colorIndex, color, palettes);
-  palettes[i][colorIndex] = color;
-  return palettes;
+function updateColorInPalette(paletteIndex, colorIndex, newcolor, palettes) {
+  // return (palettes[paletteIndex][colorIndex] = newcolor);
+  return palettes.map((colors, i) => {
+    if (i == paletteIndex) {
+      colors[colorIndex] = newcolor;
+      return colors;
+    } else {
+      return colors;
+    }
+  });
 }
 
 function removePalette(paletteIndex, palettes) {
@@ -32,6 +38,7 @@ export const useStore = create(
     paletteName: "",
     isOwned: true,
     isEditMode: true,
+    mySavedPalettes: [],
 
     resetPaletteState: () =>
       set((state) => ({
@@ -55,13 +62,16 @@ export const useStore = create(
       })),
 
     addEmptyPalette: () =>
-      set((state) => ({ palettes: [...state.palettes, [...emptyPalette]] })),
+      set((state) => ({ palettes: [...state.palettes, {}] })),
 
     updateColorInPalette: (paletteIndex, colorIndex, color) => {
       set((state) => ({
-        palettes: updateColorInPalette(paletteIndex, colorIndex, color, [
-          ...state.palettes,
-        ]),
+        palettes: updateColorInPalette(
+          paletteIndex,
+          colorIndex,
+          color,
+          state.palettes
+        ),
       }));
     },
 
@@ -109,6 +119,15 @@ export const useStore = create(
     },
 
     toggleEditMode: () => set((state) => ({ isEditMode: !state.isEditMode })),
+
+    getMyPalettes: async () => {
+      let { data, error } = await supabase.rpc("get_my_palettes");
+      console.log(data, error);
+
+      set((state) => ({
+        mySavedPalettes: data,
+      }));
+    },
   }))
 );
 

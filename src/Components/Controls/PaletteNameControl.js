@@ -35,6 +35,13 @@ const StyledSaveTextBox = styled.input`
 const StyledH1 = styled.h1`
   font-family: outfit;
   color: white;
+  text-overflow: ellipsis;
+
+  width: 20em;
+
+  /* Needed to make it work */
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 export default function PaletteNameControl({

@@ -13,6 +13,28 @@ const StyledControlBarContainer = styled.div`
   align-items: center;
 `;
 
+const StyledCopyAsNewButton = styled.button`
+  decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+
+  font-weight: 600;
+  height: 2.5rem;
+  min-width: 2.5rem;
+  font-size: 14px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border: 2px solid transparent;
+  border-radius: 0.375rem;
+  background: #50176a;
+
+  &:hover {
+    background: #000d6b;
+  }
+`;
+
 const paletteIdSelector = (state) => state.paletteId;
 const paletteNameSelector = (state) => state.paletteName;
 const palettesSelector = (state) => state.palettes;
@@ -46,7 +68,7 @@ export default function ControlBar() {
   const handleCopyClick = useCallback(() => {
     console.log(palettes);
     copyAsNewPalette();
-    navigate("/newPalette");
+    navigate("/new-palette");
   }, [copyAsNewPalette, navigate]);
 
   return (
@@ -63,7 +85,9 @@ export default function ControlBar() {
         onEditClick={toggleEditMode}
       />
 
-      <button onClick={handleCopyClick}>Copy as new</button>
+      <StyledCopyAsNewButton onClick={handleCopyClick}>
+        Copy as new
+      </StyledCopyAsNewButton>
     </StyledControlBarContainer>
   );
 }
