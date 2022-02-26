@@ -3,20 +3,10 @@ import { devtools } from "zustand/middleware";
 import { insert_palette } from "./Supabase/db";
 import { supabase } from "./Supabase/supabaseClient";
 
-const emptyPalette = new Array(30).fill(null);
-
-const initalState = {
-  paletteId: null,
-  palettes: [[]],
-  paletteName: "",
-  isOwned: true,
-  isEditMode: true,
-};
-
 function updateColorInPalette(paletteIndex, colorIndex, newcolor, palettes) {
   // return (palettes[paletteIndex][colorIndex] = newcolor);
   return palettes.map((colors, i) => {
-    if (i == paletteIndex) {
+    if (i === paletteIndex) {
       colors[colorIndex] = newcolor;
       return colors;
     } else {

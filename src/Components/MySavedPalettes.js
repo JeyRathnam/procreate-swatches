@@ -25,7 +25,7 @@ export default function MySavedPalettes() {
 
   useEffect(() => {
     getMyPalettes();
-  }, []);
+  }, [getMyPalettes]);
 
   return (
     <StyledContainer>

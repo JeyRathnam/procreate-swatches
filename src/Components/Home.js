@@ -18,13 +18,13 @@ const InnerContainerRow = styled.div`
   flex-wrap: wrap;
 `;
 
-const InnerContainerColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 60vw;
-  gap: 10px;
-  flex-wrap: wrap;
-`;
+// const InnerContainerColumn = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   width: 60vw;
+//   gap: 10px;
+//   flex-wrap: wrap;
+// `;
 
 const SquareDiv = styled.div`
   display: flex;
@@ -45,11 +45,11 @@ const ItemText = styled.div`
   font-weight: 600;
 `;
 
-const StyledSectionHeader = styled.h3`
-  margin-left: 10px;
-  font-family: outfit;
-  color: white;
-`;
+// const StyledSectionHeader = styled.h3`
+//   margin-left: 10px;
+//   font-family: outfit;
+//   color: white;
+// `;
 
 export default function Home() {
   const resetPaletteState = useStore((state) => state.resetPaletteState);

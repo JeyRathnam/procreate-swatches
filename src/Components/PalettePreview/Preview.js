@@ -48,12 +48,12 @@ function getFiveColors(palettes) {
         />
       );
       currentFilled++;
-      if (currentFilled == maxColors) {
+      if (currentFilled === maxColors) {
         break;
       }
     }
 
-    if (currentFilled == maxColors) {
+    if (currentFilled === maxColors) {
       break;
     }
   }

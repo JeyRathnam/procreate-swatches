@@ -26,6 +26,9 @@ export async function savePalette(paletteDetail) {
 
 export async function insert_palette(paletteDetail) {
   const user = supabase.auth.user();
+  if (!user) {
+    return;
+  }
   const { data, error } = await supabase.rpc("insert_palette", paletteDetail);
 
   if (error) {
