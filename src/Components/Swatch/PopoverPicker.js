@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import styled from "styled-components";
 import { useStore } from "../../store";
+import "./Styles/picker.css";
 import useClickOutside from "./useClickOutside";
 
 const StyledColor = styled.div`
@@ -17,39 +18,49 @@ const StyledColorPicker = styled.div`
   position: absolute;
 `;
 
-export const PopoverPicker = ({ color, paletteIndex, colorIndex }) => {
+const isEditModeSelector = (state) => state.isEditMode;
+
+export const PopoverPicker = ({ paletteIndex, colorIndex, color }) => {
+  const palettes = useStore((state) => state.palettes);
+
   const popover = useRef();
   const [isOpen, toggle] = useState(false);
-  const [backgroundColor, setBackgroundColor] = useState(color);
   const updateColorInPalette = useStore((store) => store.updateColorInPalette);
+  const isEditMode = useStore(isEditModeSelector);
+  // const color = useMemo(() => palettes[paletteIndex][colorIndex], [])
 
   const close = useCallback(() => toggle(false), []);
   useClickOutside(popover, close);
 
-  useEffect(() => {
-    updateColorInPalette(paletteIndex, colorIndex, backgroundColor);
-  }, [paletteIndex, colorIndex, backgroundColor, updateColorInPalette]);
+  // useEffect(() => {
+  //   updateColorInPalette(paletteIndex, colorIndex, backgroundColor);
+  // }, [paletteIndex, colorIndex, backgroundColor, updateColorInPalette]);
+
+  function handleColorChange(color) {
+    updateColorInPalette(paletteIndex, colorIndex, color);
+  }
 
   return (
     <div className="picker">
-      <StyledColor
+      <div
+        style={{
+          backgroundColor: color ?? "",
+        }}
         className="swatch"
-        size={5}
-        color={backgroundColor}
+        color={color}
         onClick={() => {
-          if (color === null) {
-            setBackgroundColor("#000000");
+          if (isEditMode) {
+            if (color === null) {
+              handleColorChange("#000000");
+            }
+            toggle(true);
           }
-          toggle(true);
         }}
       />
 
       {isOpen && (
         <StyledColorPicker className="popover" ref={popover}>
-          <HexColorPicker
-            color={backgroundColor}
-            onChange={setBackgroundColor}
-          />
+          <HexColorPicker color={color} onChange={handleColorChange} />
         </StyledColorPicker>
       )}
     </div>

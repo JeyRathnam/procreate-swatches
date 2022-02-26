@@ -15,13 +15,13 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
-export default function AddNew() {
+export default function AddNewButton() {
   const addEmptyPalette = useStore((state) => state.addEmptyPalette);
 
   return (
     <StyledButton onClick={() => addEmptyPalette()}>
       <svg
-        class="w-6 h-6"
+        className="w-6 h-6"
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"

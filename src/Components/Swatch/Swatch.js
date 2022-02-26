@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useStore } from "../../store";
 import Pallet from "./Pallet";
 
 const StyledSwatchContainer = styled.div`
@@ -9,12 +8,14 @@ const StyledSwatchContainer = styled.div`
   align-items: flex-start;
 `;
 
-export default function Swatch() {
-  const colorPalettes = useStore((state) => state.palettes);
+export default function Swatch({ palettes }) {
+  if (!Array.isArray(palettes)) {
+    return <div>Error</div>;
+  }
 
   return (
     <StyledSwatchContainer>
-      {colorPalettes.map((colorPalette, i) => (
+      {palettes.map((colorPalette, i) => (
         <Pallet key={i} paletteIndex={i} colors={colorPalette} />
       ))}
     </StyledSwatchContainer>

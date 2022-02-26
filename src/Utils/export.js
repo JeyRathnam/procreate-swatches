@@ -3,7 +3,9 @@ import JSZip from "jszip";
 import Color from "onecolor";
 function exportJson(colors) {
   const data = [{ swatches: [] }];
-  colors.forEach((color) => {
+
+  for (let key in colors) {
+    let color = colors[key];
     if (color !== null) {
       const parsed = Color(color);
       const hsv = parsed.hsv();
@@ -18,7 +20,7 @@ function exportJson(colors) {
         colorSpace,
       });
     }
-  });
+  }
 
   return JSON.stringify(data);
 }
