@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const StyledPreview = styled.div`
-  // border: 1px solid white;
   width: 200px;
   overflow: hidden;
   cursor: pointer;
@@ -9,9 +8,10 @@ const StyledPreview = styled.div`
 
 const StyledGrid = styled.div`
   display: flex;
-  flex-direction: column;
-  // border-radius: 10px;
-  // overflow: hidden;
+  flex-direction: row;
+  border: 2px solid #ff5da2b3;
+  border-radius: 5px;
+  padding: 3px;
 `;
 
 const MiniSquare = styled.div`
@@ -23,7 +23,7 @@ const StyledH3 = styled.h3`
   font-weight: 100;
   color: white;
   text-overflow: ellipsis;
-
+  margin: 5px 0;
   /* Needed to make it work */
   overflow: hidden;
   white-space: nowrap;
@@ -39,7 +39,13 @@ function getFiveColors(palettes) {
     for (let j = 0; j < paletteObjects.length; j++) {
       const color = palette[paletteObjects[j]];
       colors[currentFilled] = (
-        <MiniSquare style={{ backgroundColor: color ?? "", height: "40px" }} />
+        <MiniSquare
+          style={{
+            backgroundColor: color ?? "",
+            width: "40px",
+            height: "40px",
+          }}
+        />
       );
       currentFilled++;
       if (currentFilled == maxColors) {
@@ -50,19 +56,6 @@ function getFiveColors(palettes) {
     if (currentFilled == maxColors) {
       break;
     }
-  }
-
-  while (currentFilled < maxColors) {
-    colors[currentFilled] = (
-      <MiniSquare
-        style={{
-          border: "1px solid white",
-
-          opacity: 0.1,
-        }}
-      />
-    );
-    currentFilled++;
   }
 
   return colors;

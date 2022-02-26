@@ -62,7 +62,7 @@ export const useStore = create(
       })),
 
     addEmptyPalette: () =>
-      set((state) => ({ palettes: [...state.palettes, {}] })),
+      set((state) => ({ palettes: [...state.palettes, {}], isEditMode: true })),
 
     updateColorInPalette: (paletteIndex, colorIndex, color) => {
       set((state) => ({

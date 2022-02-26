@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { useStore } from "../store";
-import { NewPaletteIcon, UploadImageIcon } from "./../Icons/index";
+import { NewPaletteIcon } from "./../Icons/index";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -72,7 +72,7 @@ export default function Home() {
           <ItemText>from Image</ItemText>
         </SquareDiv> */}
       </InnerContainerRow>
-      <InnerContainerColumn>
+      {/* <InnerContainerColumn>
         <StyledSectionHeader>Your palettes</StyledSectionHeader>
         <SquareDiv>
           <UploadImageIcon />
@@ -85,7 +85,7 @@ export default function Home() {
           <UploadImageIcon />
           <ItemText>from Image</ItemText>
         </SquareDiv>
-      </InnerContainerColumn>
+      </InnerContainerColumn> */}
     </Container>
   );
 }

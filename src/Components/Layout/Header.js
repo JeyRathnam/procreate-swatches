@@ -62,15 +62,17 @@ const StyledAuthButton = styled(StyledButton)``;
 export default function Header() {
   const navigate = useNavigate();
   const { user } = useAuth();
-
+  console.log(user);
   return (
     <StyledHeader>
       <StyledDiv>
         <Logo />
         <StyledMenuItemContainer>
-          <StyledLink onClick={() => navigate("my-palettes")}>
-            <StyledButton>My Palettes </StyledButton>
-          </StyledLink>
+          {user !== null && (
+            <StyledLink onClick={() => navigate("my-palettes")}>
+              <StyledButton>My Palettes </StyledButton>
+            </StyledLink>
+          )}
         </StyledMenuItemContainer>
         <StyledAuthContainer>
           {user ? (

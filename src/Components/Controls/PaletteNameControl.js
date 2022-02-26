@@ -26,18 +26,16 @@ const StyledSaveButton = styled.button`
 `;
 
 const StyledSaveTextBox = styled.input`
-  width: 20em;
   height: 1.5rem;
   border: 2px solid transparent;
   border-radius: 0.2rem;
+  width: 20em;
 `;
 
 const StyledH1 = styled.h1`
   font-family: outfit;
   color: white;
   text-overflow: ellipsis;
-
-  width: 20em;
 
   /* Needed to make it work */
   overflow: hidden;

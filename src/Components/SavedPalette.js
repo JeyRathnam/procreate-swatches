@@ -20,6 +20,7 @@ const Container = styled.div`
 
 export default function SavedPalette() {
   const { paletteId } = useParams();
+  console.log(paletteId);
   const [loading, setLoading] = useState(true);
   const getPaletteFromId = useStore((state) => state.getPaletteFromId);
   const palettes = useStore((state) => state.palettes);
@@ -27,8 +28,7 @@ export default function SavedPalette() {
   console.log(loading);
 
   useEffect(() => {
-    getPaletteFromId(paletteId);
-    setLoading(false);
+    getPaletteFromId(paletteId).then(() => setLoading(false));
   }, []);
 
   if (loading) {
