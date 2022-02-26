@@ -58,7 +58,7 @@ export default function ControlBar() {
     if (paletteId !== null) {
       navigate(`/palette/${paletteId}`);
     }
-  }, [paletteId]);
+  }, [paletteId, navigate]);
 
   function handleSavePalette() {
     savePalette(paletteId, paletteName, palettes);
@@ -66,7 +66,6 @@ export default function ControlBar() {
   }
 
   const handleCopyClick = useCallback(() => {
-    console.log(palettes);
     copyAsNewPalette();
     navigate("/new-palette");
   }, [copyAsNewPalette, navigate]);

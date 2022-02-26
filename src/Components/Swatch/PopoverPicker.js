@@ -5,15 +5,6 @@ import { useStore } from "../../store";
 import "./Styles/picker.css";
 import useClickOutside from "./useClickOutside";
 
-const StyledColor = styled.div`
-  width: ${(props) => props.size}vw;
-  height: ${(props) => props.size}vw;
-  align-content: center;
-  ${(props) =>
-    props.color !== null ? `background-color: ${props.color}` : ""};
-  border: 1px solid rgb(153, 221, 204, 0.1);
-`;
-
 const StyledColorPicker = styled.div`
   position: absolute;
 `;
@@ -21,8 +12,6 @@ const StyledColorPicker = styled.div`
 const isEditModeSelector = (state) => state.isEditMode;
 
 export const PopoverPicker = ({ paletteIndex, colorIndex, color }) => {
-  const palettes = useStore((state) => state.palettes);
-
   const popover = useRef();
   const [isOpen, toggle] = useState(false);
   const updateColorInPalette = useStore((store) => store.updateColorInPalette);

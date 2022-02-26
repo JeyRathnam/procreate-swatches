@@ -23,10 +23,6 @@ export const StyledAuthButton = styled.button`
   }
 `;
 
-const StyledLoginPrompt = styled.div`
-  position: absolute;
-`;
-
 export default function SignIn() {
   const navigate = useNavigate();
   const handleLoginClick = useCallback(() => navigate("/login"), [navigate]);

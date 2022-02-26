@@ -29,7 +29,7 @@ export default function SavedPalette() {
 
   useEffect(() => {
     getPaletteFromId(paletteId).then(() => setLoading(false));
-  }, []);
+  }, [getPaletteFromId, paletteId]);
 
   if (loading) {
     return <Container>loading ... </Container>;
